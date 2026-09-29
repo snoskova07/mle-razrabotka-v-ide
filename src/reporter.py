@@ -17,6 +17,16 @@ class DataFrameReporter:
         print('Количество дубликатов:', duplicates)
         print('Доля дубликатов:', format(duplicates / df.shape[0], self.percent_format))
 
+        print(df.describe(include='all' if self.include_all else None))
+        
+        # Подсчет количества пропусков во всем датафрейме одним числом
+        total_missing = df.isna().sum().sum()
+        print('Количество пропусков:', total_missing)
+        
+        # Доля пропусков во всем датафрейме одним числом с плавающей точкой
+        # в формате float_format
+        print('Доля пропусков:', format(df.isna().mean(axis=None), self.float_format))
+
 data = pd.read_csv('./data/payments.csv')
 
 # Запуск show_report с разными настройками
